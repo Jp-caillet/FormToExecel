@@ -1,0 +1,126 @@
+package greenwhishes;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+
+import jxl.CellView;
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.format.UnderlineStyle;
+import jxl.read.biff.BiffException;
+import jxl.write.Formula;
+import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
+
+
+public class WriteExcel {
+
+    private WritableCellFormat timesBoldUnderline;
+    private WritableCellFormat times;
+    private String inputFile;
+    private int ID;
+    private String NOM;
+    private String SOCIETE;
+    private String Date;
+    
+    
+public WriteExcel(String Nom, String SOCIETE, String Date){
+	this.NOM= Nom;
+	this.SOCIETE= SOCIETE;
+	this.Date= Date;
+	ReadExcel tutu = new ReadExcel();
+    tutu.setInputFile("C:/Users/jp789/Desktop/greenwishes/test.xls");
+    try {
+		tutu.read();
+		this.ID= tutu.getRow();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
+public void setOutputFile(String inputFile) {
+    this.inputFile = inputFile;
+    }
+
+    public void write() throws IOException, WriteException {
+        File file = new File(this.inputFile);
+        
+        WorkbookSettings wbSettings = new WorkbookSettings();
+
+        wbSettings.setLocale(new Locale("en", "EN"));
+        try {
+			Workbook workbook1 = Workbook.getWorkbook(file);
+			 WritableWorkbook workbook = Workbook.createWorkbook(file, workbook1);
+		        workbook.createSheet("Report", 0);
+		        WritableSheet excelSheet = workbook.getSheet(0);
+		        createLabel(excelSheet);
+		        createContent(excelSheet);
+
+		        workbook.write();
+		        workbook.close();
+		} catch (BiffException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+    }
+
+    private void createLabel(WritableSheet sheet)
+            throws WriteException {
+        // Lets create a times font
+        WritableFont times10pt = new WritableFont(WritableFont.TIMES, 10);
+        // Define the cell format
+        times = new WritableCellFormat(times10pt);
+        // Lets automatically wrap the cells
+        times.setWrap(true);
+
+        // create create a bold font with unterlines
+        WritableFont times10ptBoldUnderline = new WritableFont(
+                WritableFont.TIMES, 10, WritableFont.BOLD, false,
+                UnderlineStyle.SINGLE);
+        timesBoldUnderline = new WritableCellFormat(times10ptBoldUnderline);
+        // Lets automatically wrap the cells
+        timesBoldUnderline.setWrap(true);
+
+        CellView cv = new CellView();
+        
+        cv.setAutosize(true);
+
+
+
+    }
+
+    private void createContent(WritableSheet sheet) throws WriteException,
+            RowsExceededException {
+        
+        addNumber(sheet, 0, this.ID, this.ID);
+        addLabel(sheet, 1, this.ID, this.NOM);
+        addLabel(sheet, 2, this.ID, this.SOCIETE);
+        addLabel(sheet, 3, this.ID, this.Date);
+    }
+
+    
+
+    private void addNumber(WritableSheet sheet, int column, int row,
+            Integer integer) throws WriteException, RowsExceededException {
+        Number number;
+        number = new Number(column, row, integer, times);
+        sheet.addCell(number);
+    }
+
+    private void addLabel(WritableSheet sheet, int column, int row, String s)
+            throws WriteException, RowsExceededException {
+        Label label;
+        label = new Label(column, row, s, times);
+        sheet.addCell(label);
+    }
+    
+    
+}

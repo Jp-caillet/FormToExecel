@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from project &apos;greenwhishes&apos;&#x0D;&#x0A;- Original project: &apos;greenwhishes&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     jcalendar-1.4.jar&#x0D;&#x0A;     jgoodies-common-1.2.0.jar&#x0D;&#x0A;     jgoodies-looks-2.4.1.jar&#x0D;&#x0A;     junit-4.6.jar" description="Delete elements" element1="jcalendar-1.4.jar" element2="jgoodies-common-1.2.0.jar" element3="junit-4.6.jar" element4="jgoodies-looks-2.4.1.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1529271146948" subPackages="false" version="1.0"/>
+</session>
